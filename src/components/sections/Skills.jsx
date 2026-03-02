@@ -35,35 +35,45 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Projects — 가로 스크롤, 카드 전체 클릭 */}
+        {/* Projects — 가로 스크롤 */}
         <div>
           <div className="flex items-center gap-2 mb-5">
             <Wrench size={16} className="text-primary" />
             <h3 className="text-base font-semibold text-text">제작 프로젝트</h3>
           </div>
-          <div className="flex gap-5 overflow-x-auto pb-3 -mx-6 px-6 md:-mx-12 md:px-12 snap-x snap-mandatory">
-            {projects.map((item) => (
-              <a
-                key={item.title}
-                href={item.url ?? '#'}
-                target={item.url ? '_blank' : undefined}
-                rel="noopener noreferrer"
-                className="flex-shrink-0 w-64 md:w-72 snap-start bg-white rounded-xl border border-bg-deep shadow-sm p-6 flex flex-col gap-3 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
-              >
-                <p className="font-bold text-text text-lg tracking-heading">
-                  {item.title}
-                </p>
-                <p className="text-sm text-text-muted leading-relaxed flex-1">
-                  {item.content}
-                </p>
-                {item.url && (
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:text-primary-dark transition-colors">
-                    <ExternalLink size={13} />
-                    {item.url.replace('https://', '')}
-                  </span>
-                )}
-              </a>
-            ))}
+          <div className="relative -mx-6 md:-mx-12">
+            {/* scroll track */}
+            <div className="flex gap-4 overflow-x-auto pb-4 px-6 md:px-12 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              {projects.map((item) => (
+                <a
+                  key={item.title}
+                  href={item.url ?? '#'}
+                  target={item.url ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 w-52 snap-start rounded-2xl p-6 flex flex-col gap-4
+                             bg-[#370001] hover:bg-primary
+                             shadow-md hover:shadow-xl hover:-translate-y-1
+                             transition-all duration-200 group"
+                >
+                  <div className="w-7 h-0.5 rounded-full bg-white/25 group-hover:bg-white/40 transition-colors" />
+                  <p className="font-bold text-white text-base tracking-heading leading-snug flex-1">
+                    {item.title}
+                  </p>
+                  <p className="text-xs text-white/60 leading-relaxed line-clamp-3">
+                    {item.content}
+                  </p>
+                  {item.url && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-white/50 group-hover:text-white/80 transition-colors">
+                      <ExternalLink size={12} />
+                      {item.url.replace('https://', '')}
+                    </span>
+                  )}
+                </a>
+              ))}
+            </div>
+            {/* fade hints */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-4 w-6 bg-gradient-to-r from-bg-light to-transparent md:w-12" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-4 w-16 bg-gradient-to-l from-bg-light to-transparent md:w-24" />
           </div>
         </div>
 
