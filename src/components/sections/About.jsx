@@ -1,5 +1,4 @@
 import { usePortfolio } from '@/context/PortfolioContext'
-import { Badge } from '@/components/ui/badge'
 import { GraduationCap, Briefcase } from 'lucide-react'
 
 function formatYear(dateStr) {
@@ -68,17 +67,6 @@ export default function About() {
               ))}
             </div>
 
-            {/* Interests quick-view */}
-            <div className="mt-6">
-              <p className="text-sm font-medium text-text-muted mb-3">관심 분야</p>
-              <div className="flex flex-wrap gap-2">
-                {getByCategory('interests').map((i) => (
-                  <Badge key={i.title} variant="muted">
-                    {i.description}
-                  </Badge>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
