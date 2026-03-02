@@ -116,14 +116,14 @@ function getItemSub(item) {
   const cat = item._cat
   if (cat === 'awards') return item.content || null
   if (cat === 'training') return item.content || null
-  if (cat === 'research_paper' || cat === 'writing') return item.description || null
+  if (cat === 'research_paper' || cat === 'writing') return item.content || null
   if (cat === 'activities') return item.description || null
   if (cat === 'profile_education') return item.description || null
   return null
 }
 
 // ── 우측 섹션 블록 ───────────────────────────────────────────
-function SlideSection({ label, cats, theme, layout, getByCategory }) {
+function SlideSection({ label, cats, theme, layout, showYear, getByCategory }) {
   const items = cats.flatMap((cat) =>
     getByCategory(cat).map((item) => ({ ...item, _cat: cat }))
   )
@@ -181,7 +181,7 @@ function SlideSection({ label, cats, theme, layout, getByCategory }) {
                   {getItemLabel(item, item._cat)}
                 </span>
               </div>
-              {item.date && (
+              {showYear && item.date && (
                 <span style={{ fontSize: '9px', color: theme.muted, flexShrink: 0 }}>
                   {formatYear(item.date)}
                 </span>
@@ -215,6 +215,7 @@ export default function Presentation() {
   const [showLogo, setShowLogo]     = useState(true)
   const [logoKey, setLogoKey]       = useState('color')
   const [logoOpacity, setLogoOpacity] = useState(25)
+  const [showYear, setShowYear]     = useState(true)
   const [exporting, setExporting]   = useState(false)
 
   const theme     = THEMES[themeIdx]
@@ -372,6 +373,21 @@ export default function Presentation() {
                 </div>
               </div>
 
+              {/* 연도 표시 */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 mb-2">연도</p>
+                <button
+                  onClick={() => setShowYear((v) => !v)}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-md border transition-colors ${
+                    showYear
+                      ? 'bg-gray-900 text-white border-gray-900'
+                      : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'
+                  }`}
+                >
+                  {showYear ? '표시 중' : '숨김'}
+                </button>
+              </div>
+
               {/* 기관 로고 */}
               <div>
                 <p className="text-xs font-semibold text-gray-500 mb-2">기관 로고</p>
@@ -478,10 +494,13 @@ export default function Presentation() {
                     {profileInfo.nameEn}
                   </p>
                   {position && (
-                    <p style={{ fontSize: '11px', color: theme.leftText, lineHeight: 1.5, marginBottom: '16px', opacity: 0.9 }}>
+                    <p style={{ fontSize: '11px', color: theme.leftText, lineHeight: 1.5, marginBottom: '6px', opacity: 0.9 }}>
                       {position.content}
                     </p>
                   )}
+                  <p style={{ fontSize: '10px', color: theme.leftMuted, marginBottom: '16px' }}>
+                    {profileInfo.email}
+                  </p>
                   <div style={{ width: '32px', height: '2px', background: theme.leftMuted, marginBottom: '16px', opacity: 0.5 }} />
                   <p style={{ fontSize: '11px', color: theme.leftMuted, lineHeight: 1.6 }}>
                     {profileInfo.tagline}
@@ -494,12 +513,9 @@ export default function Presentation() {
                     <img
                       src={logoSrc}
                       alt="Korea University"
-                      style={{ width: '110px', opacity: logoOpacity / 100, display: 'block', marginBottom: '10px', mixBlendMode: logoBlend }}
+                      style={{ width: '110px', opacity: logoOpacity / 100, display: 'block', mixBlendMode: logoBlend }}
                     />
                   )}
-                  <p style={{ fontSize: '10px', color: theme.leftMuted }}>
-                    {profileInfo.email}
-                  </p>
                 </div>
               </div>
 
@@ -517,6 +533,7 @@ export default function Presentation() {
                       cats={sec.cats}
                       theme={theme}
                       layout={layout}
+                      showYear={showYear}
                       getByCategory={getByCategory}
                     />
                   ))
