@@ -7,8 +7,9 @@ dist/
 # Local Netlify folder
 .netlify
 
-# 원본 폰트 (public/fonts/에 필요한 것만 복사됨)
+# 폰트 바이너리 (CDN으로 대체)
 pretendard/
+public/fonts/
 
 # 레거시 파일 (개인정보 포함)
 legacy/

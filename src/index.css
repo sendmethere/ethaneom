@@ -2,31 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Pretendard ──────────────────────────────── */
-@font-face {
-  font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-SemiBold.otf') format('opentype');
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-display: swap;
-}
+/* ─── Pretendard (CDN) ────────────────────────── */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 
 /* ─── Base ────────────────────────────────────── */
 @layer base {
