@@ -20,7 +20,7 @@ export default function Content() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {items.map((item) => (
             <a
               key={item.title}
@@ -47,16 +47,16 @@ export default function Content() {
               </div>
 
               {/* Body */}
-              <div className="p-5 flex flex-col gap-2 flex-1">
-                <p className="font-semibold text-text leading-snug">{item.title}</p>
+              <div className="p-3 flex flex-col gap-1.5 flex-1">
+                <p className="font-semibold text-xs text-text leading-snug">{item.title}</p>
                 {item.content && (
-                  <p className="text-sm text-text-muted leading-relaxed flex-1">
+                  <p className="text-xs text-text-muted leading-relaxed flex-1 line-clamp-2">
                     {item.content}
                   </p>
                 )}
                 {item.url && (
-                  <span className="inline-flex items-center gap-1.5 mt-1 text-xs font-medium text-primary group-hover:text-primary-dark transition-colors">
-                    <ExternalLink size={12} />
+                  <span className="inline-flex items-center gap-1 mt-0.5 text-xs font-medium text-primary group-hover:text-primary-dark transition-colors">
+                    <ExternalLink size={11} />
                     바로가기
                   </span>
                 )}
