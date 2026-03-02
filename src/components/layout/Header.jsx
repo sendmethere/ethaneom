@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { label: '연수', href: '#training' },
   { label: '활동', href: '#activities' },
   { label: '기술', href: '#skills' },
+  { label: '콘텐츠', href: '#content' },
 ]
 
 export default function Header() {

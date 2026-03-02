@@ -82,6 +82,7 @@ export const handler = async () => {
         description: parseProperty(p.description),
         date: parseProperty(p.date),
         url: parseProperty(p.url),
+        image: parseProperty(p.image),
       }
     })
 

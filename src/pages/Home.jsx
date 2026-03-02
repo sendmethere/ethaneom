@@ -5,6 +5,7 @@ import Research from '@/components/sections/Research'
 import Training from '@/components/sections/Training'
 import Activities from '@/components/sections/Activities'
 import Skills from '@/components/sections/Skills'
+import Content from '@/components/sections/Content'
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Training />
       <Activities />
       <Skills />
+      <Content />
     </main>
   )
 }
