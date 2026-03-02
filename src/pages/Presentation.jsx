@@ -209,12 +209,12 @@ function SlideSection({ label, cats, theme, layout, showYear, getByCategory }) {
 // ── 메인 컴포넌트 ─────────────────────────────────────────────
 export default function Presentation() {
   const { getByCategory } = usePortfolio()
-  const [themeIdx, setThemeIdx]     = useState(0)
-  const [layout, setLayout]         = useState('card')
-  const [selected, setSelected]     = useState(['education', 'position', 'awards', 'research', 'activities'])
+  const [themeIdx, setThemeIdx]     = useState(1)
+  const [layout, setLayout]         = useState('flat')
+  const [selected, setSelected]     = useState(['education', 'position', 'research', 'activities'])
   const [showLogo, setShowLogo]     = useState(true)
-  const [logoKey, setLogoKey]       = useState('color')
-  const [logoOpacity, setLogoOpacity] = useState(25)
+  const [logoKey, setLogoKey]       = useState('white')
+  const [logoOpacity, setLogoOpacity] = useState(50)
   const [showYear, setShowYear]     = useState(true)
   const [exporting, setExporting]   = useState(false)
 
