@@ -3,6 +3,7 @@ import { usePortfolio } from '@/context/PortfolioContext'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ExternalLink, FileText, BookMarked } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
 
 function formatYear(dateStr) {
   if (!dateStr) return null
@@ -96,6 +97,33 @@ export default function Research() {
               등록된 {activeTab === 'research_paper' ? '논문' : '저서'}이 없습니다.
             </p>
           )}
+        </div>
+
+        <Separator className="my-12" />
+
+        {/* Study Groups */}
+        <div className="mb-10">
+          <p className="section-label mb-4">Study Groups</p>
+          <div className="space-y-3">
+            {getByCategory('study_group').map((item) => (
+              <div key={item.title} className="bg-white rounded-xl border border-bg-deep p-5 shadow-sm">
+                <p className="font-semibold text-sm text-text mb-1">{item.title}</p>
+                <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Research Interests */}
+        <div>
+          <p className="section-label mb-4">Research Interests</p>
+          <div className="flex flex-wrap gap-2">
+            {getByCategory('interests').map((item) => (
+              <Badge key={item.title} variant="outline" className="text-sm px-4 py-1.5">
+                {item.title}
+              </Badge>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -36,7 +36,7 @@ export default function Skills() {
         </div>
 
         {/* Projects — 가로 스크롤, 카드 전체 클릭 */}
-        <div className="mb-16">
+        <div>
           <div className="flex items-center gap-2 mb-5">
             <Wrench size={16} className="text-primary" />
             <h3 className="text-base font-semibold text-text">제작 프로젝트</h3>
@@ -67,30 +67,6 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Study Groups */}
-        <div className="mb-10">
-          <p className="section-label mb-4">Study Groups</p>
-          <div className="space-y-3">
-            {getByCategory('study_group').map((item) => (
-              <div key={item.title} className="bg-bg-deep/50 rounded-xl p-5">
-                <p className="font-semibold text-sm text-text mb-1">{item.title}</p>
-                <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Research Interests */}
-        <div>
-          <p className="section-label mb-4">Research Interests</p>
-          <div className="flex flex-wrap gap-2">
-            {getByCategory('interests').map((item) => (
-              <Badge key={item.title} variant="outline" className="text-sm px-4 py-1.5">
-                {item.title}
-              </Badge>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   )
