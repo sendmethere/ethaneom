@@ -178,6 +178,9 @@ function SlideSection({ label, cats, theme, layout, showYear, getByCategory }) {
                   overflow: 'hidden', display: '-webkit-box',
                   WebkitLineClamp: 1, WebkitBoxOrient: 'vertical',
                 }}>
+                  {item._cat === 'profile_education' && item.title && (
+                    <strong style={{ fontWeight: 700, marginRight: '5px' }}>{item.title}</strong>
+                  )}
                   {getItemLabel(item, item._cat)}
                 </span>
               </div>
