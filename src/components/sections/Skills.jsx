@@ -87,15 +87,11 @@ export default function Skills() {
         {/* Research Interests */}
         <div>
           <p className="section-label mb-4">Research Interests</p>
-          <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
             {getByCategory('interests').map((item) => (
-              <div
-                key={item.title}
-                className="bg-white border border-bg-deep rounded-xl px-5 py-3 shadow-sm"
-              >
-                <p className="font-semibold text-sm text-text">{item.title}</p>
-                <p className="text-xs text-text-muted mt-0.5">{item.description}</p>
-              </div>
+              <Badge key={item.title} variant="outline" className="text-sm px-4 py-1.5">
+                {item.title}
+              </Badge>
             ))}
           </div>
         </div>
