@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { portfolioItems } from '@/data/portfolio'
 
 const PortfolioContext = createContext(null)
 
@@ -8,7 +7,7 @@ function filterByCategory(items, category) {
 }
 
 export function PortfolioProvider({ children }) {
-  const [items, setItems] = useState(portfolioItems)
+  const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [source, setSource] = useState('static') // 'static' | 'notion'
 
