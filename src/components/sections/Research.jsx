@@ -119,9 +119,15 @@ export default function Research() {
           <p className="section-label mb-4">Research Interests</p>
           <div className="flex flex-wrap gap-2">
             {getByCategory('interests').map((item) => (
-              <Badge key={item.title} variant="outline" className="text-sm px-4 py-1.5">
-                {item.title}
-              </Badge>
+              <div
+                key={item.title}
+                className="inline-flex flex-col px-4 py-2 rounded-full border border-bg-deep bg-white"
+              >
+                <span className="text-sm font-medium text-text leading-snug">{item.title}</span>
+                {item.description && (
+                  <span className="text-xs text-text-muted/70 leading-snug">{item.description}</span>
+                )}
+              </div>
             ))}
           </div>
         </div>
