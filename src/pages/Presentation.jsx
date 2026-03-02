@@ -65,8 +65,8 @@ const LAYOUTS = [
 const CONTENT_SECTIONS = [
   { key: 'education',  label: '학력',           cats: ['profile_education'] },
   { key: 'position',   label: '소속',           cats: ['profile_position'] },
-  { key: 'awards',     label: '수상 경력',      cats: ['awards'] },
   { key: 'research',   label: '연구 및 집필',   cats: ['research_paper', 'writing'] },
+  { key: 'awards',     label: '수상 경력',      cats: ['awards'] },
   { key: 'training',   label: '연수',           cats: ['training'] },
   { key: 'activities', label: '교육 관련 활동', cats: ['activities'] },
 ]
