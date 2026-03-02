@@ -99,9 +99,8 @@ export default function Research() {
           )}
         </div>
 
-        <Separator className="my-12" />
-
-        {/* Study Groups */}
+        {/* {/* Study Groups */}
+        {/* <Separator className="my-12" />
         <div className="mb-10">
           <p className="section-label mb-4">Study Groups</p>
           <div className="space-y-3">
@@ -112,7 +111,9 @@ export default function Research() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
+
+        <Separator className="my-12" />
 
         {/* Research Interests */}
         <div>
