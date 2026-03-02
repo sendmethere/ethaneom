@@ -10,7 +10,7 @@ export const profileInfo = {
   name: '엄태상',
   nameEn: 'EOM TAE SANG',
   tagline: '증거가 바꾸는 교실을 꿈꾸는 교사 연구자입니다.',
-  email: 'sendmethere@naver.com',
+  email: 'ethaneom@korea.ac.kr',
   photo: '/profile.png',
 }
 
