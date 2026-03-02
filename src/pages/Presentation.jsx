@@ -19,6 +19,7 @@ const THEMES = [
     muted: '#6B6B6B',
     border: 'rgba(118,2,14,0.2)',
     sectionBg: 'rgba(118,2,14,0.06)',
+    logoBlend: 'screen',
   },
   {
     name: '화이트',
@@ -31,6 +32,7 @@ const THEMES = [
     muted: '#888888',
     border: 'rgba(0,0,0,0.12)',
     sectionBg: 'rgba(0,0,0,0.03)',
+    logoBlend: 'screen',
   },
   {
     name: '노션',
@@ -43,6 +45,7 @@ const THEMES = [
     muted: '#9B9A97',
     border: 'rgba(55,53,47,0.16)',
     sectionBg: 'rgba(55,53,47,0.04)',
+    logoBlend: 'multiply',
   },
   {
     name: '다크',
@@ -55,6 +58,7 @@ const THEMES = [
     muted: '#A0A0A0',
     border: 'rgba(255,107,107,0.25)',
     sectionBg: 'rgba(255,107,107,0.07)',
+    logoBlend: 'screen',
   },
   {
     name: '미드나잇',
@@ -67,6 +71,7 @@ const THEMES = [
     muted: '#94A3B8',
     border: 'rgba(56,189,248,0.2)',
     sectionBg: 'rgba(56,189,248,0.05)',
+    logoBlend: 'screen',
   },
 ]
 
@@ -168,6 +173,8 @@ export default function Presentation() {
   const [themeIdx, setThemeIdx] = useState(0)
   const [layout, setLayout] = useState('card')
   const [selected, setSelected] = useState(['education', 'position', 'awards', 'research', 'activities'])
+  const [showLogo, setShowLogo] = useState(true)
+  const [logoOpacity, setLogoOpacity] = useState(25)
 
   const theme = THEMES[themeIdx]
   const containerRef = useRef(null)
@@ -274,6 +281,29 @@ export default function Presentation() {
                 </div>
               </div>
 
+              {/* 기관 로고 */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 mb-2">기관 로고</p>
+                <div className="flex items-center gap-3">
+                  <label className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border cursor-pointer transition-colors select-none ${showLogo ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}>
+                    <input type="checkbox" className="sr-only" checked={showLogo} onChange={(e) => setShowLogo(e.target.checked)} />
+                    고려대학교 로고
+                  </label>
+                  {showLogo && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400">불투명도</span>
+                      <input
+                        type="range" min="5" max="70" step="5"
+                        value={logoOpacity}
+                        onChange={(e) => setLogoOpacity(Number(e.target.value))}
+                        className="w-24 accent-gray-900"
+                      />
+                      <span className="text-xs text-gray-500 w-7">{logoOpacity}%</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* 섹션 선택 */}
               <div>
                 <p className="text-xs font-semibold text-gray-500 mb-2">표시 섹션</p>
@@ -370,12 +400,27 @@ export default function Presentation() {
                   </p>
                 </div>
 
-                {/* 하단: 이메일 */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Mail size={11} color={theme.leftMuted} />
-                  <p style={{ fontSize: '10px', color: theme.leftMuted }}>
-                    {profileInfo.email}
-                  </p>
+                {/* 하단: 로고 + 이메일 */}
+                <div>
+                  {showLogo && (
+                    <img
+                      src="/korea-univ.png"
+                      alt="Korea University"
+                      style={{
+                        width: '110px',
+                        opacity: logoOpacity / 100,
+                        display: 'block',
+                        marginBottom: '10px',
+                        mixBlendMode: theme.logoBlend,
+                      }}
+                    />
+                  )}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Mail size={11} color={theme.leftMuted} />
+                    <p style={{ fontSize: '10px', color: theme.leftMuted }}>
+                      {profileInfo.email}
+                    </p>
+                  </div>
                 </div>
               </div>
 
