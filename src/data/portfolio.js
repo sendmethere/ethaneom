@@ -234,7 +234,7 @@ export const portfolioItems = [
     url: null,
   },
   {
-    category: 'skills',
+    category: 'skills_project',
     title: '탐탐몬',
     content: '개념기반탐구 수업 도구 《탐탐몬》',
     description: '개념기반탐구 수업 도구',
@@ -242,7 +242,7 @@ export const portfolioItems = [
     url: 'https://tamtammon.netlify.app',
   },
   {
-    category: 'skills',
+    category: 'skills_project',
     title: '메모몬',
     content: '교실용 메모 도구 《메모몬》',
     description: '교실용 메모 도구',
@@ -250,7 +250,7 @@ export const portfolioItems = [
     url: 'https://eomssam-memo.netlify.app',
   },
   {
-    category: 'skills',
+    category: 'skills_project',
     title: '마이리틀랩',
     content: '현장연구 지원 도구 《마이리틀랩》 (교실혁명연수용)',
     description: '현장연구 지원 도구',

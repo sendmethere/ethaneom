@@ -2,14 +2,10 @@ import { usePortfolio } from '@/context/PortfolioContext'
 import { Badge } from '@/components/ui/badge'
 import { ExternalLink, Code2, Wrench } from 'lucide-react'
 
-const techItems = ['ReactJS', 'Python & Django']
-const projectItems = ['탐탐몬', '메모몬', '마이리틀랩']
-
 export default function Skills() {
   const { getByCategory } = usePortfolio()
-  const items = getByCategory('skills')
-  const tech     = items.filter((i) => techItems.includes(i.title))
-  const projects = items.filter((i) => projectItems.includes(i.title))
+  const tech     = getByCategory('skills')
+  const projects = getByCategory('skills_project')
 
   return (
     <section id="skills" className="section-padding bg-bg-light">
