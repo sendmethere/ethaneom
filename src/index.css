@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Pretendard ──────────────────────────────── */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ─── Base ────────────────────────────────────── */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg-light text-text font-pretendard antialiased;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4 {
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ─── Utilities ───────────────────────────────── */
+@layer utilities {
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-base {
+    @apply max-w-[1200px] mx-auto px-6 md:px-12;
+  }
+
+  .section-label {
+    @apply text-xs font-medium uppercase tracking-widest text-primary;
+  }
+}
