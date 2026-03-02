@@ -90,8 +90,8 @@ const SCHEMA = [
       {
         category: 'interests',
         fields: [
-          { field: 'title',       example: '설계-개발 연구' },
-          { field: 'description', example: 'Design & Development Research' },
+          { field: 'title',   example: '설계-개발 연구' },
+          { field: 'content', example: 'Design & Development Research' },
         ],
       },
     ],

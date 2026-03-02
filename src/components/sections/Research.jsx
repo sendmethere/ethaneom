@@ -124,8 +124,8 @@ export default function Research() {
                 className="inline-flex flex-col px-4 py-2 rounded-full border border-bg-deep bg-white"
               >
                 <span className="text-base font-semibold text-text leading-snug">{item.title}</span>
-                {item.description && (
-                  <span className="text-xs text-text-muted/70 leading-snug">{item.description}</span>
+                {item.content && (
+                  <span className="text-xs text-text-muted/70 leading-snug">{item.content}</span>
                 )}
               </div>
             ))}
