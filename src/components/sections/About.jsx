@@ -17,7 +17,6 @@ export default function About() {
   return (
     <section id="about" className="section-padding bg-bg-deep/40">
       <div className="container-base">
-        {/* Section header */}
         <div className="mb-12">
           <p className="section-label mb-2">About</p>
           <h2 className="text-3xl md:text-4xl font-bold tracking-heading text-text">
@@ -43,7 +42,9 @@ export default function About() {
                     {item.date && (
                       <p className="text-xs text-text-muted mb-1">{formatYear(item.date)}</p>
                     )}
-                    <p className="font-semibold text-sm text-text mb-1">{item.title.replace('학력 — ', '')}</p>
+                    <p className="font-semibold text-sm text-text mb-1">
+                      {item.title.replace('학력 — ', '')}
+                    </p>
                     <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
                   </div>
                 </div>
@@ -55,16 +56,21 @@ export default function About() {
           <div>
             <div className="flex items-center gap-2 mb-6">
               <Briefcase size={18} className="text-primary" />
-              <h3 className="text-base font-semibold text-text">재직</h3>
+              <h3 className="text-base font-semibold text-text">소속</h3>
             </div>
             {position && (
               <div className="bg-white rounded-xl border border-bg-deep p-6 shadow-sm">
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <p className="font-semibold text-text">{position.content}</p>
-                  <Badge variant="solid" className="flex-shrink-0">재직 중</Badge>
+                  <Badge
+                    variant="muted"
+                    className="flex-shrink-0 bg-amber-100 text-amber-700 border border-amber-200"
+                  >
+                    휴직 중
+                  </Badge>
                 </div>
                 <p className="text-sm text-text-muted">
-                  {position.date?.slice(0, 7).replace('-', '.')} ~ 현재
+                  {position.date?.slice(0, 7).replace('-', '.')} ~
                 </p>
               </div>
             )}
