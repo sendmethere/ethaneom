@@ -1,7 +1,7 @@
 import { usePortfolio } from '@/context/PortfolioContext'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Users } from 'lucide-react'
+import { Users, ExternalLink } from 'lucide-react'
 
 function formatYear(dateStr) {
   if (!dateStr) return null
@@ -49,7 +49,20 @@ export default function Activities() {
                   <div key={item.title}>
                     <div className="flex items-start gap-3 p-5">
                       <Users size={15} className="text-primary mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-text leading-relaxed">{item.content}</p>
+                      <div>
+                        <p className="text-sm text-text leading-relaxed">{item.content}</p>
+                        {item.url && (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 mt-2 text-xs font-medium text-primary hover:text-primary-dark transition-colors"
+                          >
+                            <ExternalLink size={13} />
+                            바로가기
+                          </a>
+                        )}
+                      </div>
                     </div>
                     {i < grouped[year].length - 1 && <Separator className="mx-5 w-auto" />}
                   </div>

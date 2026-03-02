@@ -1,7 +1,7 @@
 import { usePortfolio } from '@/context/PortfolioContext'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Trophy } from 'lucide-react'
+import { Trophy, ExternalLink } from 'lucide-react'
 
 function formatDate(dateStr) {
   if (!dateStr) return null
@@ -44,6 +44,17 @@ export default function Awards() {
                       )}
                     </div>
                     <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
+                    {item.url && (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-primary hover:text-primary-dark transition-colors"
+                      >
+                        <ExternalLink size={13} />
+                        바로가기
+                      </a>
+                    )}
                   </div>
                 </div>
               </CardContent>

@@ -1,7 +1,7 @@
 import { usePortfolio } from '@/context/PortfolioContext'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Mic } from 'lucide-react'
+import { Mic, ExternalLink } from 'lucide-react'
 
 export default function Training() {
   const { getByCategory } = usePortfolio()
@@ -37,6 +37,17 @@ export default function Training() {
                     )}
                   </div>
                   <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
+                  {item.url && (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 mt-2 text-xs font-medium text-primary hover:text-primary-dark transition-colors"
+                    >
+                      <ExternalLink size={13} />
+                      바로가기
+                    </a>
+                  )}
                 </div>
               </div>
               {i < items.length - 1 && <Separator className="mx-6 w-auto" />}
