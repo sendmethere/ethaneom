@@ -51,6 +51,9 @@ export default function Activities() {
                       <Users size={15} className="text-primary mt-0.5 flex-shrink-0" />
                       <div>
                         <p className="text-sm text-text leading-relaxed">{item.content}</p>
+                        {item.description && (
+                          <p className="text-xs text-text-muted mt-1">{item.description}</p>
+                        )}
                         {item.url && (
                           <a
                             href={item.url}
