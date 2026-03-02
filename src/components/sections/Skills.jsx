@@ -1,5 +1,4 @@
 import { usePortfolio } from '@/context/PortfolioContext'
-import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ExternalLink, Code2, Wrench } from 'lucide-react'
 
@@ -9,7 +8,7 @@ const projectItems = ['탐탐몬', '메모몬', '마이리틀랩']
 export default function Skills() {
   const { getByCategory } = usePortfolio()
   const items = getByCategory('skills')
-  const tech = items.filter((i) => techItems.includes(i.title))
+  const tech     = items.filter((i) => techItems.includes(i.title))
   const projects = items.filter((i) => projectItems.includes(i.title))
 
   return (
@@ -40,70 +39,64 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Projects */}
-        <div>
+        {/* Projects — 가로 스크롤, 카드 전체 클릭 */}
+        <div className="mb-16">
           <div className="flex items-center gap-2 mb-5">
             <Wrench size={16} className="text-primary" />
             <h3 className="text-base font-semibold text-text">제작 프로젝트</h3>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="flex gap-5 overflow-x-auto pb-3 -mx-6 px-6 md:-mx-12 md:px-12 snap-x snap-mandatory">
             {projects.map((item) => (
-              <Card key={item.title} className="bg-white group">
-                <CardContent className="p-6 flex flex-col h-full">
-                  <div className="flex-1">
-                    <p className="font-bold text-text text-lg mb-2 tracking-heading">
-                      {item.title}
-                    </p>
-                    <p className="text-sm text-text-muted leading-relaxed mb-4">
-                      {item.content}
-                    </p>
-                  </div>
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary-dark transition-colors group-hover:underline"
-                    >
-                      <ExternalLink size={13} />
-                      {item.url.replace('https://', '')}
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
+              <a
+                key={item.title}
+                href={item.url ?? '#'}
+                target={item.url ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-64 md:w-72 snap-start bg-white rounded-xl border border-bg-deep shadow-sm p-6 flex flex-col gap-3 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
+              >
+                <p className="font-bold text-text text-lg tracking-heading">
+                  {item.title}
+                </p>
+                <p className="text-sm text-text-muted leading-relaxed flex-1">
+                  {item.content}
+                </p>
+                {item.url && (
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:text-primary-dark transition-colors">
+                    <ExternalLink size={13} />
+                    {item.url.replace('https://', '')}
+                  </span>
+                )}
+              </a>
             ))}
           </div>
         </div>
 
-        {/* Study groups & interests */}
-        <div className="mt-16 grid md:grid-cols-2 gap-10">
-          {/* Study Groups */}
-          <div>
-            <p className="section-label mb-4">Study Groups</p>
-            <div className="space-y-4">
-              {getByCategory('study_group').map((item) => (
-                <div key={item.title} className="bg-bg-deep/50 rounded-xl p-5">
-                  <p className="font-semibold text-sm text-text mb-1">{item.title}</p>
-                  <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
-                </div>
-              ))}
-            </div>
+        {/* Study Groups */}
+        <div className="mb-10">
+          <p className="section-label mb-4">Study Groups</p>
+          <div className="space-y-3">
+            {getByCategory('study_group').map((item) => (
+              <div key={item.title} className="bg-bg-deep/50 rounded-xl p-5">
+                <p className="font-semibold text-sm text-text mb-1">{item.title}</p>
+                <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Research Interests */}
-          <div>
-            <p className="section-label mb-4">Research Interests</p>
-            <div className="flex flex-wrap gap-3">
-              {getByCategory('interests').map((item) => (
-                <div
-                  key={item.title}
-                  className="bg-white border border-bg-deep rounded-xl px-5 py-3 shadow-sm"
-                >
-                  <p className="font-semibold text-sm text-text">{item.title}</p>
-                  <p className="text-xs text-text-muted mt-0.5">{item.description}</p>
-                </div>
-              ))}
-            </div>
+        {/* Research Interests */}
+        <div>
+          <p className="section-label mb-4">Research Interests</p>
+          <div className="space-y-3">
+            {getByCategory('interests').map((item) => (
+              <div
+                key={item.title}
+                className="bg-white border border-bg-deep rounded-xl px-5 py-3 shadow-sm"
+              >
+                <p className="font-semibold text-sm text-text">{item.title}</p>
+                <p className="text-xs text-text-muted mt-0.5">{item.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
