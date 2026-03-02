@@ -3,8 +3,8 @@ import { Menu, X } from 'lucide-react'
 
 const NAV_LINKS = [
   { label: '소개', href: '#about' },
-  { label: '수상', href: '#awards' },
   { label: '연구', href: '#research' },
+  { label: '수상', href: '#awards' },
   { label: '연수', href: '#training' },
   { label: '활동', href: '#activities' },
   { label: '기술', href: '#skills' },

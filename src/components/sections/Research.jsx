@@ -22,7 +22,7 @@ export default function Research() {
   const visible = getByCategory(activeTab)
 
   return (
-    <section id="research" className="section-padding bg-bg-deep/40">
+    <section id="research" className="section-padding bg-bg-light">
       <div className="container-base">
         {/* Section header */}
         <div className="mb-10">

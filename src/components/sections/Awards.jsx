@@ -14,7 +14,7 @@ export default function Awards() {
   const items = getByCategory('awards')
 
   return (
-    <section id="awards" className="section-padding bg-bg-light">
+    <section id="awards" className="section-padding bg-bg-deep/40">
       <div className="container-base">
         <div className="mb-12">
           <p className="section-label mb-2">Recognition</p>
