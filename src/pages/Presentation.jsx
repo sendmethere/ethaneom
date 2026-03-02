@@ -2,9 +2,10 @@
  * /presentation — PPT 삽입용 경력 장표 생성기 (비공개)
  */
 import { useState, useRef, useEffect } from 'react'
+import html2canvas from 'html2canvas-pro'
 import { usePortfolio } from '@/context/PortfolioContext'
 import { profileInfo } from '@/data/portfolio'
-import { Printer, Mail } from 'lucide-react'
+import { Printer, Image } from 'lucide-react'
 
 // ── 테마 프리셋 ────────────────────────────────────────────────
 const THEMES = [
@@ -75,6 +76,12 @@ const THEMES = [
   },
 ]
 
+// ── 로고 옵션 ─────────────────────────────────────────────────
+const LOGOS = [
+  { value: 'color', label: '컬러', src: '/korea-univ.png' },
+  { value: 'white', label: '화이트', src: '/korea-univ-white.png' },
+]
+
 // ── 레이아웃 스타일 ───────────────────────────────────────────
 const LAYOUTS = [
   { value: 'box',  label: '박스' },
@@ -96,11 +103,23 @@ function formatYear(d) {
   return d ? d.slice(0, 4) : null
 }
 
+// 항목의 주 텍스트
 function getItemLabel(item, cat) {
   if (cat === 'awards' || cat === 'training') return item.title
   if (cat === 'research_paper' || cat === 'writing')
     return item.title.replace(/^(논문|저서)[—\-–] ?/, '').trim()
   return item.content ?? item.title
+}
+
+// 항목의 보조 텍스트 (content / description)
+function getItemSub(item) {
+  const cat = item._cat
+  if (cat === 'awards') return item.content || null
+  if (cat === 'training') return item.content || null
+  if (cat === 'research_paper' || cat === 'writing') return item.description || null
+  if (cat === 'activities') return item.description || null
+  if (cat === 'profile_education') return item.description || null
+  return null
 }
 
 // ── 우측 섹션 블록 ───────────────────────────────────────────
@@ -128,13 +147,13 @@ function SlideSection({ label, cats, theme, layout, getByCategory }) {
     flat: {
       borderLeft: `3px solid ${theme.accent}`,
       paddingLeft: '10px',
-      marginBottom: '10px',
+      marginBottom: '16px',
     },
   }[layout]
 
   return (
     <div style={wrapStyle}>
-      {/* section label */}
+      {/* 섹션 레이블 */}
       <p style={{
         fontSize: '9px',
         fontWeight: 700,
@@ -145,20 +164,40 @@ function SlideSection({ label, cats, theme, layout, getByCategory }) {
       }}>
         {label}
       </p>
-      {/* items */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-        {items.slice(0, 6).map((item, i) => (
-          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '5px', minWidth: 0 }}>
-              <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: theme.accent, flexShrink: 0, marginTop: '5px' }} />
-              <span style={{ fontSize: '11px', color: theme.text, lineHeight: 1.45, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' }}>
-                {getItemLabel(item, item._cat)}
-              </span>
+
+      {/* 항목 목록 */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        {items.slice(0, 5).map((item, i) => (
+          <div key={i}>
+            {/* 주 텍스트 줄 */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '5px', minWidth: 0 }}>
+                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: theme.accent, flexShrink: 0, marginTop: '5px' }} />
+                <span style={{
+                  fontSize: '11px', color: theme.text, lineHeight: 1.45,
+                  overflow: 'hidden', display: '-webkit-box',
+                  WebkitLineClamp: 1, WebkitBoxOrient: 'vertical',
+                }}>
+                  {getItemLabel(item, item._cat)}
+                </span>
+              </div>
+              {item.date && (
+                <span style={{ fontSize: '9px', color: theme.muted, flexShrink: 0 }}>
+                  {formatYear(item.date)}
+                </span>
+              )}
             </div>
-            {item.date && (
-              <span style={{ fontSize: '9px', color: theme.muted, flexShrink: 0 }}>
-                {formatYear(item.date)}
-              </span>
+
+            {/* 보조 텍스트 (content / description) */}
+            {getItemSub(item) && (
+              <p style={{
+                fontSize: '9px', color: theme.muted, lineHeight: 1.4,
+                paddingLeft: '9px', marginTop: '1px',
+                overflow: 'hidden', display: '-webkit-box',
+                WebkitLineClamp: 1, WebkitBoxOrient: 'vertical',
+              }}>
+                {getItemSub(item)}
+              </p>
             )}
           </div>
         ))}
@@ -170,15 +209,20 @@ function SlideSection({ label, cats, theme, layout, getByCategory }) {
 // ── 메인 컴포넌트 ─────────────────────────────────────────────
 export default function Presentation() {
   const { getByCategory } = usePortfolio()
-  const [themeIdx, setThemeIdx] = useState(0)
-  const [layout, setLayout] = useState('card')
-  const [selected, setSelected] = useState(['education', 'position', 'awards', 'research', 'activities'])
-  const [showLogo, setShowLogo] = useState(true)
+  const [themeIdx, setThemeIdx]     = useState(0)
+  const [layout, setLayout]         = useState('card')
+  const [selected, setSelected]     = useState(['education', 'position', 'awards', 'research', 'activities'])
+  const [showLogo, setShowLogo]     = useState(true)
+  const [logoKey, setLogoKey]       = useState('color')
   const [logoOpacity, setLogoOpacity] = useState(25)
+  const [exporting, setExporting]   = useState(false)
 
-  const theme = THEMES[themeIdx]
+  const theme     = THEMES[themeIdx]
+  const logoSrc   = LOGOS.find((l) => l.value === logoKey)?.src ?? LOGOS[0].src
+  const logoBlend = logoKey === 'white' ? 'normal' : theme.logoBlend
+
   const containerRef = useRef(null)
-  const slideRef = useRef(null)
+  const slideRef     = useRef(null)
 
   // 슬라이드 스케일 조정
   useEffect(() => {
@@ -199,17 +243,54 @@ export default function Presentation() {
       prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
     )
 
-  const selectedSections = CONTENT_SECTIONS.filter((s) => selected.includes(s.key))
+  // PNG 내보내기
+  const exportPng = async () => {
+    if (!slideRef.current || !containerRef.current) return
+    setExporting(true)
+    const el        = slideRef.current
+    const container = containerRef.current
+    const prevTransform     = el.style.transform
+    const prevContainerHeight = container.style.height
 
-  // 소속 첫 번째 항목을 좌측 패널에 표시
-  const position = getByCategory('profile_position')[0]
+    try {
+      el.style.transform       = 'scale(1)'
+      container.style.height   = '540px'
+      await new Promise((r) => requestAnimationFrame(r))
+
+      const canvas = await html2canvas(el, {
+        scale: 2,
+        width: 960,
+        height: 540,
+        useCORS: true,
+        allowTaint: false,
+        logging: false,
+        backgroundColor: null,
+      })
+
+      const link = document.createElement('a')
+      link.download = 'presentation.png'
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    } finally {
+      el.style.transform     = prevTransform
+      container.style.height = prevContainerHeight
+      setExporting(false)
+    }
+  }
+
+  const selectedSections = CONTENT_SECTIONS.filter((s) => selected.includes(s.key))
+  const position         = getByCategory('profile_position')[0]
 
   return (
     <>
-      {/* 인쇄 시 슬라이드만 표시 */}
+      {/* 인쇄 CSS — 배경·텍스트 색상 강제 출력 */}
       <style>{`
         @media print {
-          @page { size: 960px 540px; margin: 0; }
+          @page { size: 960px 540px landscape; margin: 0; }
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
           body > * { display: none !important; }
           #slide-print-target {
             display: flex !important;
@@ -224,27 +305,37 @@ export default function Presentation() {
 
       <div className="min-h-screen bg-gray-100">
         {/* 컨트롤 헤더 */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4 no-print">
+        <div className="bg-white border-b border-gray-200 px-6 py-4">
           <div className="max-w-5xl mx-auto">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-5">
               <div>
                 <p className="text-xs font-mono text-gray-400 mb-0.5">🔒 internal</p>
                 <h1 className="text-lg font-bold text-gray-900">Presentation Builder</h1>
               </div>
-              <button
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                <Printer size={15} />
-                인쇄 / PDF 저장
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={exportPng}
+                  disabled={exporting}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                >
+                  <Image size={15} />
+                  {exporting ? '내보내는 중…' : 'PNG 저장'}
+                </button>
+                <button
+                  onClick={() => window.print()}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  <Printer size={15} />
+                  PDF 저장
+                </button>
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
               {/* 테마 */}
               <div>
                 <p className="text-xs font-semibold text-gray-500 mb-2">테마</p>
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-1">
                   {THEMES.map((t, i) => (
                     <button
                       key={t.name}
@@ -285,21 +376,43 @@ export default function Presentation() {
               <div>
                 <p className="text-xs font-semibold text-gray-500 mb-2">기관 로고</p>
                 <div className="flex items-center gap-3">
+                  {/* 표시 토글 */}
                   <label className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border cursor-pointer transition-colors select-none ${showLogo ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}>
                     <input type="checkbox" className="sr-only" checked={showLogo} onChange={(e) => setShowLogo(e.target.checked)} />
-                    고려대학교 로고
+                    고려대학교
                   </label>
+
                   {showLogo && (
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-400">불투명도</span>
-                      <input
-                        type="range" min="5" max="70" step="5"
-                        value={logoOpacity}
-                        onChange={(e) => setLogoOpacity(Number(e.target.value))}
-                        className="w-24 accent-gray-900"
-                      />
-                      <span className="text-xs text-gray-500 w-7">{logoOpacity}%</span>
-                    </div>
+                    <>
+                      {/* 컬러 / 화이트 선택 */}
+                      <div className="flex gap-1">
+                        {LOGOS.map((l) => (
+                          <button
+                            key={l.value}
+                            onClick={() => setLogoKey(l.value)}
+                            className={`px-2.5 py-1.5 text-xs font-medium rounded-md border transition-colors ${
+                              logoKey === l.value
+                                ? 'bg-gray-900 text-white border-gray-900'
+                                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'
+                            }`}
+                          >
+                            {l.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* 불투명도 슬라이더 */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-400">불투명도</span>
+                        <input
+                          type="range" min="5" max="70" step="5"
+                          value={logoOpacity}
+                          onChange={(e) => setLogoOpacity(Number(e.target.value))}
+                          className="w-24 accent-gray-900"
+                        />
+                        <span className="text-xs text-gray-500 w-7">{logoOpacity}%</span>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
@@ -317,12 +430,7 @@ export default function Presentation() {
                           : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'
                       }`}
                     >
-                      <input
-                        type="checkbox"
-                        className="sr-only"
-                        checked={selected.includes(s.key)}
-                        onChange={() => toggleSection(s.key)}
-                      />
+                      <input type="checkbox" className="sr-only" checked={selected.includes(s.key)} onChange={() => toggleSection(s.key)} />
                       {s.label}
                     </label>
                   ))}
@@ -360,41 +468,21 @@ export default function Presentation() {
               }}>
                 {/* 상단: 프로필 */}
                 <div>
-                  {/* 사진 */}
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    marginBottom: '20px',
-                    border: `3px solid ${theme.leftMuted}`,
-                  }}>
-                    <img
-                      src={profileInfo.photo}
-                      alt={profileInfo.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
+                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden', marginBottom: '20px', border: `3px solid ${theme.leftMuted}` }}>
+                    <img src={profileInfo.photo} alt={profileInfo.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
-
-                  {/* 이름 */}
                   <p style={{ fontSize: '26px', fontWeight: 800, color: theme.leftText, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '4px' }}>
                     {profileInfo.name}
                   </p>
                   <p style={{ fontSize: '11px', fontWeight: 500, color: theme.leftMuted, letterSpacing: '0.1em', marginBottom: '20px' }}>
                     {profileInfo.nameEn}
                   </p>
-
-                  {/* 소속 */}
                   {position && (
                     <p style={{ fontSize: '11px', color: theme.leftText, lineHeight: 1.5, marginBottom: '16px', opacity: 0.9 }}>
                       {position.content}
                     </p>
                   )}
-
-                  {/* 구분선 */}
                   <div style={{ width: '32px', height: '2px', background: theme.leftMuted, marginBottom: '16px', opacity: 0.5 }} />
-
-                  {/* Tagline */}
                   <p style={{ fontSize: '11px', color: theme.leftMuted, lineHeight: 1.6 }}>
                     {profileInfo.tagline}
                   </p>
@@ -404,35 +492,19 @@ export default function Presentation() {
                 <div>
                   {showLogo && (
                     <img
-                      src="/korea-univ.png"
+                      src={logoSrc}
                       alt="Korea University"
-                      style={{
-                        width: '110px',
-                        opacity: logoOpacity / 100,
-                        display: 'block',
-                        marginBottom: '10px',
-                        mixBlendMode: theme.logoBlend,
-                      }}
+                      style={{ width: '110px', opacity: logoOpacity / 100, display: 'block', marginBottom: '10px', mixBlendMode: logoBlend }}
                     />
                   )}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <Mail size={11} color={theme.leftMuted} />
-                    <p style={{ fontSize: '10px', color: theme.leftMuted }}>
-                      {profileInfo.email}
-                    </p>
-                  </div>
+                  <p style={{ fontSize: '10px', color: theme.leftMuted }}>
+                    {profileInfo.email}
+                  </p>
                 </div>
               </div>
 
               {/* ── 우측 2/3 패널 ── */}
-              <div style={{
-                flex: 1,
-                padding: '36px 32px',
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0',
-              }}>
+              <div style={{ flex: 1, padding: '36px 32px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {selectedSections.length === 0 ? (
                   <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <p style={{ fontSize: '13px', color: theme.muted }}>좌측에서 표시할 섹션을 선택하세요</p>
@@ -453,8 +525,8 @@ export default function Presentation() {
             </div>
           </div>
 
-          <p className="mt-3 text-xs text-gray-400 text-center no-print">
-            960 × 540px · 16:9 · 인쇄 시 브라우저에서 "배경 그래픽" 옵션을 켜세요
+          <p className="mt-3 text-xs text-gray-400 text-center">
+            960 × 540px (16:9) · PDF 저장 시 브라우저 인쇄에서 "배경 그래픽" 옵션을 켜세요
           </p>
         </div>
       </div>
