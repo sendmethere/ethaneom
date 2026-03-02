@@ -60,15 +60,7 @@ export default function About() {
             </div>
             {position && (
               <div className="bg-white rounded-xl border border-bg-deep p-6 shadow-sm">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <p className="font-semibold text-text">{position.content}</p>
-                  <Badge
-                    variant="muted"
-                    className="flex-shrink-0 bg-amber-100 text-amber-700 border border-amber-200"
-                  >
-                    휴직 중
-                  </Badge>
-                </div>
+                <p className="font-semibold text-text mb-3">{position.content}</p>
                 <p className="text-sm text-text-muted">
                   {position.date?.slice(0, 7).replace('-', '.')} ~
                 </p>

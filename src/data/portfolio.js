@@ -84,9 +84,9 @@ export const portfolioItems = [
     url: null,
   },
 
-  // ── research ────────────────────────────────
+  // ── research_paper / writing ─────────────────
   {
-    category: 'research',
+    category: 'research_paper',
     title: '논문 — 수업 실연 영상 AI 평가 일치도',
     content:
       '엄태상, 장채원, & 임태형. (2025). "수업 실연 영상에 대한 인간 교사와 AI의 평가 일치도 연구." 교육정보미디어연구 31(4) 1681-1701.',
@@ -95,7 +95,7 @@ export const portfolioItems = [
     url: 'http://dx.doi.org/10.15833/KAFEIAM.31.4.1681',
   },
   {
-    category: 'research',
+    category: 'writing',
     title: '저서 — 교사들의 에듀테크 활용 바이블',
     content: '《교사들의 에듀테크 활용 바이블》(잇플ITple) 공저 (대표저자)',
     description: '교사들의 에듀테크 활용 바이블 공저',

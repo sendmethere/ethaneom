@@ -10,18 +10,15 @@ function formatYear(dateStr) {
 }
 
 const TABS = [
-  { key: 'paper', label: '논문', icon: FileText },
-  { key: 'book',  label: '저서', icon: BookMarked },
+  { key: 'research_paper', label: '논문', icon: FileText },
+  { key: 'writing',        label: '저서', icon: BookMarked },
 ]
 
 export default function Research() {
   const { getByCategory } = usePortfolio()
-  const [activeTab, setActiveTab] = useState('paper')
+  const [activeTab, setActiveTab] = useState('research_paper')
 
-  const allItems = getByCategory('research')
-  const papers = allItems.filter((i) => i.title.startsWith('논문'))
-  const books   = allItems.filter((i) => i.title.startsWith('저서'))
-  const visible  = activeTab === 'paper' ? papers : books
+  const visible = getByCategory(activeTab)
 
   return (
     <section id="research" className="section-padding bg-bg-deep/40">
@@ -51,15 +48,6 @@ export default function Research() {
             >
               <Icon size={15} />
               {label}
-              <span
-                className={`text-xs rounded-full px-1.5 py-0.5 ${
-                  activeTab === key
-                    ? 'bg-primary/10 text-primary'
-                    : 'bg-bg-light text-text-muted'
-                }`}
-              >
-                {key === 'paper' ? papers.length : books.length}
-              </span>
             </button>
           ))}
         </div>
@@ -71,20 +59,15 @@ export default function Research() {
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    {activeTab === 'paper'
+                    {activeTab === 'research_paper'
                       ? <FileText size={18} className="text-primary" />
                       : <BookMarked size={18} className="text-primary" />
                     }
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <Badge variant="default">
-                        {activeTab === 'paper' ? '논문' : '저서'}
-                      </Badge>
-                      {item.date && (
-                        <Badge variant="muted">{formatYear(item.date)}</Badge>
-                      )}
-                    </div>
+                    {item.date && (
+                      <Badge variant="muted" className="mb-2">{formatYear(item.date)}</Badge>
+                    )}
                     <p className="font-semibold text-text mb-2 leading-snug">
                       {item.title.replace(/^(논문|저서) — /, '')}
                     </p>
@@ -99,7 +82,7 @@ export default function Research() {
                         className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary-dark transition-colors"
                       >
                         <ExternalLink size={13} />
-                        {activeTab === 'paper' ? '논문 바로가기' : '도서 바로가기'}
+                        {activeTab === 'research_paper' ? '논문 바로가기' : '도서 바로가기'}
                       </a>
                     )}
                   </div>
@@ -110,7 +93,7 @@ export default function Research() {
 
           {visible.length === 0 && (
             <p className="text-sm text-text-muted py-8 text-center">
-              등록된 {activeTab === 'paper' ? '논문' : '저서'}이 없습니다.
+              등록된 {activeTab === 'research_paper' ? '논문' : '저서'}이 없습니다.
             </p>
           )}
         </div>
