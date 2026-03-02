@@ -498,7 +498,7 @@ export default function Presentation() {
                       {position.content}
                     </p>
                   )}
-                  <p style={{ fontSize: '10px', color: theme.leftMuted, marginBottom: '16px' }}>
+                  <p style={{ fontSize: '12px', color: theme.leftMuted, marginBottom: '16px' }}>
                     {profileInfo.email}
                   </p>
                   <div style={{ width: '32px', height: '2px', background: theme.leftMuted, marginBottom: '16px', opacity: 0.5 }} />
@@ -513,7 +513,7 @@ export default function Presentation() {
                     <img
                       src={logoSrc}
                       alt="Korea University"
-                      style={{ width: '110px', opacity: logoOpacity / 100, display: 'block', mixBlendMode: logoBlend }}
+                      style={{ width: '110px', opacity: logoOpacity / 100, display: 'block', marginTop: '16px', mixBlendMode: logoBlend }}
                     />
                   )}
                 </div>
