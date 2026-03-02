@@ -9,10 +9,9 @@ function formatYear(dateStr) {
 
 export default function About() {
   const { getByCategory } = usePortfolio()
-  const items = getByCategory('profile').filter((i) => i.title !== '자기소개')
 
-  const education = items.filter((i) => i.title.startsWith('학력'))
-  const position = items.find((i) => i.title === '재직')
+  const education = getByCategory('profile_education')
+  const positions  = getByCategory('profile_position')
 
   return (
     <section id="about" className="section-padding bg-bg-deep/40">
@@ -42,9 +41,7 @@ export default function About() {
                     {item.date && (
                       <p className="text-xs text-text-muted mb-1">{formatYear(item.date)}</p>
                     )}
-                    <p className="font-semibold text-sm text-text mb-1">
-                      {item.title.replace('학력 — ', '')}
-                    </p>
+                    <p className="font-semibold text-sm text-text mb-1">{item.title}</p>
                     <p className="text-sm text-text-muted leading-relaxed">{item.content}</p>
                   </div>
                 </div>
@@ -58,14 +55,18 @@ export default function About() {
               <Briefcase size={18} className="text-primary" />
               <h3 className="text-base font-semibold text-text">소속</h3>
             </div>
-            {position && (
-              <div className="bg-white rounded-xl border border-bg-deep p-6 shadow-sm">
-                <p className="font-semibold text-text mb-3">{position.content}</p>
-                <p className="text-sm text-text-muted">
-                  {position.date?.slice(0, 7).replace('-', '.')} ~
-                </p>
-              </div>
-            )}
+            <div className="space-y-4">
+              {positions.map((item) => (
+                <div key={item.title} className="bg-white rounded-xl border border-bg-deep p-6 shadow-sm">
+                  <p className="font-semibold text-text mb-2">{item.content}</p>
+                  {item.date && (
+                    <p className="text-sm text-text-muted">
+                      {item.date.slice(0, 7).replace('-', '.')} ~
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
 
             {/* Interests quick-view */}
             <div className="mt-6">

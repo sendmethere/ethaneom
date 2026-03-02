@@ -15,35 +15,29 @@ export const profileInfo = {
 }
 
 export const portfolioItems = [
-  // ── profile ─────────────────────────────────
+  // ── profile_education ───────────────────────
   {
-    category: 'profile',
-    title: '자기소개',
-    content: '증거가 바꾸는 교실을 꿈꾸는 교사 연구자입니다.',
-    description: '교사 연구자 한줄 소개',
-    date: null,
-    url: null,
-  },
-  {
-    category: 'profile',
-    title: '학력 — 학부',
+    category: 'profile_education',
+    title: '학부',
     content: '전주교육대학교 초등교육과(음악교육심화전공) 졸업',
     description: '전주교육대학교 초등교육과 졸업',
     date: '2017-02-21',
     url: null,
   },
   {
-    category: 'profile',
-    title: '학력 — 석사',
+    category: 'profile_education',
+    title: '석사',
     content:
       '전주교육대학교 교육대학원 초등교육학과 창의정보융합교육 전공 석사 졸업 (지도교수: 이용배). 졸업논문: 공동설계 기법을 활용한 교육용 게임 개발에 대한 연구 (A Study on the Development of Educational Games Using Co-Design Techniques)',
     description: '전주교육대학교 교육대학원 석사 졸업',
     date: '2023-08-23',
     url: null,
   },
+
+  // ── profile_position ────────────────────────
   {
-    category: 'profile',
-    title: '재직',
+    category: 'profile_position',
+    title: '전북특별자치도교육청 초등교사',
     content: '전북특별자치도교육청 초등교사 (초등정교사 1급)',
     description: '전북특별자치도교육청 초등교사',
     date: '2018-03-02',
