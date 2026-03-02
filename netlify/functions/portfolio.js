@@ -1,4 +1,4 @@
-const DATABASE_ID = '317b09d4-0542-80cd-953a-000bdac6eab5'
+const DATABASE_ID = '317b09d4-0542-805c-b2e5-dcbd15257d44'
 const NOTION_VERSION = '2022-06-28'
 
 /** Notion property → 일반 값 변환 */
